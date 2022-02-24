@@ -18,13 +18,16 @@ public class ShapeTest {
 		
 		Box box1 = new Box(new Point(-10, 10), new Point(10, -10));
 		System.out.println("box1: " + box1);
-		
+		checkTest(box1.equals(box1),"box1.equals(box1)");
+
 		Circle circle1 = new Circle(new Point(1, 2), 3);
-		System.out.println("circle1: " + circle1);		
+		System.out.println("circle1: " + circle1);
+		checkTest(!box1.equals(circle1),"!box1.equals(circle1)");
 		
 		Box box2 = new Box(new Point(-2, 5), new Point(4, -1));
 		System.out.println("box2: " + box2);
-		
+		checkTest(!box1.equals(box2),"!box1.equals(box2)");
+
 		Polygon poly0 = box1; // a Box is-a Polygon!
 		System.out.println("poly0: " + poly0);
 		
@@ -33,14 +36,17 @@ public class ShapeTest {
 		Polygon poly1 = new Polygon(px, py);
 		System.out.println("poly1: " + poly1);
 		System.out.println("poly1.boundingBox(): " + poly1.boundingBox());
-		
+		Box poly1Bound = new Box(-10, 10, 10, -10);
+		checkTest(poly1.boundingBox().equals(poly1Bound), "poly1.boundingBox().equals(poly1Bound)");
+
 		int[] starX = {  0, -59, 95, -95,  59};
 		int[] starY = {100, -81, 31,  31, -81};
 		Polygon polyStar = new Polygon(starX, starY);
 		System.out.println("polyStar: " + polyStar);
 		System.out.println("polyStar.boundingBox(): " + polyStar.boundingBox());
-		
-		
+		Box polyStarBound = new Box(-95, 100, 95, -81);
+		checkTest(polyStar.boundingBox().equals(polyStarBound), "polyStar.boundingBox().equals(polyStarBound)");
+
 		checkTest(origin.equals(origin), "origin.equals(origin)");
 		checkTest(!origin.equals(farPoint), "!origin.equals(farPoint)");
 		checkTest(!origin.equals(box1), "!origin.equals(box1)");
@@ -87,7 +93,14 @@ public class ShapeTest {
 		
 		Union union4 = new Union(box1, box2);
 		checkTest(!union4.equals(union1), "!union4.equals(union1)");
-		
+
+		/*
+		Triangle t = new Triangle(new Point(0,10), new Point(0,0), new Point(10,0));
+		System.out.println("Triangle: " + t);
+		System.out.println("t.boundingBox()" + t.boundingBox());
+		checkTest(t.contains(new Point(1,1)), "t.contains(new Point(1,1))");
+		checkTest(!t.contains(new Point(10,10)), "!t.contains(new Point(10,10))");
+		*/
 	}
 
 }
