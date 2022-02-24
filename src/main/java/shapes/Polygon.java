@@ -8,7 +8,14 @@ public class Polygon implements Shape {
 	protected Polygon() {
 		points = null;
 	}
-	
+
+	public Polygon(Point ...points) {
+		this.points = new ArrayList<>();
+		for (Point p: points) {
+			this.points.add(p);
+		}
+	}
+
 	public Polygon(int[] x, int[] y) {
 		if (x.length != y.length) {
 			throw new IllegalArgumentException("different lengths");

@@ -7,14 +7,29 @@ public class Box extends Polygon {
 	private final int yMax;
 
 	public Box(Point upperLeft, Point lowerRight) {
+		super(upperLeft,
+				new Point(lowerRight.getX(), upperLeft.getY()),
+				lowerRight,
+				new Point(upperLeft.getX(), lowerRight.getY())
+		    );
 		if (upperLeft == null || lowerRight == null) {
 			throw new IllegalArgumentException("null argument");
 		}
 		// TODO: if min is greater than max, swap min and max
-		xMin = upperLeft.getX();
-		xMax = lowerRight.getX();
-		yMin = lowerRight.getY();
-		yMax = upperLeft.getY();
+		if (upperLeft.getX() < lowerRight.getX()) {
+			xMin = upperLeft.getX();
+			xMax = lowerRight.getX();
+		} else {
+			xMin = lowerRight.getX();
+			xMax = upperLeft.getX();
+		}
+		if (lowerRight.getY() < upperLeft.getY()) {
+			yMin = lowerRight.getY();
+			yMax = upperLeft.getY();
+		} else {
+			yMin = upperLeft.getY();
+			yMax = lowerRight.getY();
+		}
 	}
 	
 	public Box(int xMin, int yMax, int xMax, int yMin) {
@@ -31,7 +46,7 @@ public class Box extends Polygon {
 		return String.format("Box(upperLeft:(%d, %d), lowerRight:(%d, %d)), width: %d, height: %d)",
 				xMin, yMax, xMax, yMin, getWidth(), getHeight());
 	}
-	
+
 	@Override
 	public boolean equals(Object o) {
 		if (o == null) {
@@ -62,6 +77,8 @@ public class Box extends Polygon {
 		return ((xMin <= x) && (x <= xMax) &&
 				(yMin <= y) && (y <= yMax));
 	}
+
+
 
 	@Override
 	public Box boundingBox() {
